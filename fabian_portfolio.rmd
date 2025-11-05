@@ -1,0 +1,33 @@
+---
+title: "fabian_portfolio"
+author: "Fabian Cheruiyot"
+date: "2025-11-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+To track my personal weight loss journey, i collected a dataset using my smartwatch, a kitchen scale, a bathroom scale and the google fit app that contains hours of sleep, calories cosumed, calories used, and my body weight in pounds.
+
+![My Smartwatch](watch.jpeg){height=2%}
+
+```{r}
+october_data <- read.table("october_data.txt", header=TRUE)
+```
+# Student T-test
+
+
+# Fishers exact test
+To meet meet my weight loss goals i set a daily calorie deficit target of 1000.
+Here will examine if i hit my target more or less frequently on days with good sleep(that is, hours >= 8)
+
+## null hypothesis
+Getting good sleep has no impact on whether i hit my caloric deficit target.
+
+```{r}
+good_sleep <- october_data$Sleep.Hours >= 8
+october_data$Sleep.Hours.[good_sleep]
+```

@@ -10,15 +10,62 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introduction
-To track my personal weight loss journey, i collected a dataset using my smartwatch, a kitchen scale, a bathroom scale and the google fit app that contains hours of sleep, calories cosumed, calories used, and my body weight in pounds.
+To track my personal weight loss journey, i collected a dataset using my smart watch, a kitchen scale, a bathroom scale and the google fit app that contains hours of sleep, calories cosumed, calories used, and my body weight in pounds, with each row representing a day of the month.
 
-![My Smartwatch](watch.jpeg){height=2%}
+![My Smartwatch](watch.jpeg){width=100%}
 
 ```{r}
 october_data <- read.table("october_data.txt", header=TRUE)
+head(october_data, 5)
 ```
-# Student T-test
+## Student T-test
+#### a). Weight Change
+|        Here I will examine whether my body weight significantly changed between the first half and second half of the month of October.
+* __Null Hypothesis(H₀)__: There is no difference in my body weight between the first and second half of the month od October.  
+__Alternative Hypothesis(H1)__: My mean body weight is lower in the second half of the month compared to the first half of the month.
 
+```{r indent = "     "}
+# Student t-test comparing mean of body weight recorded in the second half of the month against the first half of the month.
+second_half <- as.Date(october_data$Date, format = "%d/%m/%Y") >= "2025-10-16"
+ans <- t.test(october_data$Weight.lbs.[second_half],october_data$Weight.lbs.[!second_half], alternative = "less")
+# Mean Values
+ans$estimate
+# P-value
+ans$p.value
+```
+__One-sided test Justification__: Based on general knowledge and observations I expect my body weight to reduce from maintaining a calorie deficit over a sustained period of time.
++ 
+
+##### a). Impact of good sleep on calories consumed.
++ Here I will examine whether I consumed more or less calories on days that I had enough sleep.
+
+```{r indent = "     "}
+good_sleep <- october_data$Sleep.Hours >= 8
+mean(october_data$Calories_Consumed[good_sleep])
+mean(october_data$Calories_Consumed[!good_sleep])
+t.test(october_data$Calories_Consumed[good_sleep],october_data$Calories_Consumed[!good_sleep])
+```
+
+##### a). Impact of good sleep on daily activity(calories used).
+Here I will examine whether I was more or less active(used more/less calories) on days that I had enough sleep.
+
+```{r indent = "     "}
+good_sleep <- october_data$Sleep.Hours >= 8
+mean(october_data$Calories_Used[good_sleep])
+mean(october_data$Calories_Used[!good_sleep])
+t.test(october_data$Calories_Used[good_sleep],october_data$Calories_Used[!good_sleep])
+```
+# Linear regression
+My dataset includes 4 key independent variables(sleep(hrs), calories_consumed, calories_used, and weight(lbs)).The collected data is noisy as i did not use exact methods for measurement/collection of the data. In this section I will analyze the variables to map relationships and use the modeled relationships to influence my weight loss journey.
+```{r}
+plot(Calories_Used~Sleep.Hours., data=october_data, col="red" )
+points(Calories_Consumed~Sleep.Hours.,  data=october_data, col="blue")
+```
+
+```{r}
+plot(log10(Calories_Used)~Sleep.Hours., data=october_data)
+abline(lm(log10(Calories_Used)~Sleep.Hours., data=october_data))
+```
 
 # Fishers exact test
 To meet meet my weight loss goals i set a daily calorie deficit target of 1000.
@@ -30,4 +77,5 @@ Getting good sleep has no impact on whether i hit my caloric deficit target.
 ```{r}
 good_sleep <- october_data$Sleep.Hours >= 8
 october_data$Sleep.Hours.[good_sleep]
+october_data$Caloric_Difference
 ```

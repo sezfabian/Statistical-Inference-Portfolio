@@ -384,18 +384,18 @@ head(october_data, 5)</code></pre>
 ## 5       230.8   FALSE</code></pre>
 <div id="student-t-test" class="section level2">
 <h2>Student T-test</h2>
-<div id="a.-weight-change" class="section level4">
-<h4>a). Weight Change</h4>
+<div id="a.-weight-change-over-the-month-of-october-one-sided-t-test" class="section level4">
+<h4>a). Weight Change over the month of October (One-sided t-test)</h4>
 <div class="line-block">       Here I will examine whether my body
 weight significantly changed between the first half and second half of
 the month of October.</div>
 <ul>
-<li><p><strong>Null Hypothesis(H₀)</strong>: There is no difference in
-my body weight between the first and second half of the month od
-October.<br />
-<strong>Alternative Hypothesis(H1)</strong>: My mean body weight is
-lower in the second half of the month compared to the first half of the
-month.</p>
+<li><p><strong><em>Null Hypothesis(H₀)</em></strong>: There is no
+difference in my body weight between the first and second half of the
+month od October.<br />
+<strong><em>Alternative Hypothesis(H1)</em></strong>: My mean body
+weight is lower in the second half of the month compared to the first
+half of the month.</p>
 <pre class="r"><code># Student t-test comparing mean of body weight recorded in the second half of the month against the first half of the month.
 second_half &lt;- as.Date(october_data$Date, format = &quot;%d/%m/%Y&quot;) &gt;= &quot;2025-10-16&quot;
 ans &lt;- t.test(october_data$Weight.lbs.[second_half],october_data$Weight.lbs.[!second_half], alternative = &quot;less&quot;)
@@ -406,74 +406,82 @@ ans$estimate</code></pre>
 <pre class="r"><code># P-value
 ans$p.value</code></pre>
 <pre><code>## [1] 1.779958e-08</code></pre>
-<p><strong>One-sided test Justification</strong>: Based on general
-knowledge and observations I expect my body weight to reduce from
-maintaining a calorie deficit over a sustained period of time.</p></li>
-<li></li>
+<p><strong><em>One-sided test Justification</em></strong>: Based on
+general knowledge and observations I expect my body weight to reduce
+from maintaining a calorie deficit over a sustained period of
+time.<br />
+<strong><em>Statistical interpretation</em></strong>: P-value &lt; 0.05,
+hence we fail to reject the null hypothesis. This affirms the alternate
+hypothesis that my my body weight decreased. <strong>Contextual
+interpretation</strong>: Over the course of the month of October, my
+body weight shows a statistically significant decrease that aligns with
+my weight loss goals that can be attributed to having maintained a
+calorie deficit on most days of the month.</p></li>
 </ul>
-<div id="a.-impact-of-good-sleep-on-calories-consumed." class="section level5">
-<h5>a). Impact of good sleep on calories consumed.</h5>
-<ul>
-<li><p>Here I will examine whether I consumed more or less calories on
-days that I had enough sleep.</p>
+</div>
+<div id="b.-impact-of-good-sleep-on-daily-activity-and-calories-consumed-two-sided-t-test" class="section level4">
+<h4>b). Impact of good sleep on daily activity and calories consumed
+(Two-sided t-test )</h4>
+<ol style="list-style-type: lower-roman">
+<li><p><strong>Daily Activity (Calories Used)</strong><br />
+Here I will examine whether I was more or less active(used more/less
+calories) on days that I had good(enough) sleep where good sleep is
+defined by the adult standard of 8-hours sleep.<br />
+<strong><em>Null Hypothesis(H₀)</em></strong>: Getting good sleep has no
+impact on whether I am more or less active during the day.<br />
+<strong><em>Alternative Hypothesis(H1)</em></strong>: Good sleep impacts
+how active I am during the day.</p>
 <pre class="r"><code>good_sleep &lt;- october_data$Sleep.Hours &gt;= 8
-mean(october_data$Calories_Consumed[good_sleep])</code></pre>
-<pre><code>## [1] 1714.2</code></pre>
-<pre class="r"><code>mean(october_data$Calories_Consumed[!good_sleep])</code></pre>
-<pre><code>## [1] 1767.571</code></pre>
-<pre class="r"><code>t.test(october_data$Calories_Consumed[good_sleep],october_data$Calories_Consumed[!good_sleep])</code></pre>
-<pre><code>## 
-##     Welch Two Sample t-test
-## 
-## data:  october_data$Calories_Consumed[good_sleep] and october_data$Calories_Consumed[!good_sleep]
-## t = -0.16908, df = 17.373, p-value = 0.8677
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -718.2785  611.5357
-## sample estimates:
-## mean of x mean of y 
-##  1714.200  1767.571</code></pre></li>
-</ul>
-</div>
-<div id="a.-impact-of-good-sleep-on-daily-activitycalories-used." class="section level5">
-<h5>a). Impact of good sleep on daily activity(calories used).</h5>
-<p>Here I will examine whether I was more or less active(used more/less
-calories) on days that I had enough sleep.</p>
-<pre><code> ``` r
- good_sleep &lt;- october_data$Sleep.Hours &gt;= 8
- mean(october_data$Calories_Used[good_sleep])
- ```
- 
- ```
- ## [1] 2947.5
- ```
- 
- ``` r
- mean(october_data$Calories_Used[!good_sleep])
- ```
- 
- ```
- ## [1] 3045.095
- ```
- 
- ``` r
- t.test(october_data$Calories_Used[good_sleep],october_data$Calories_Used[!good_sleep])
- ```
- 
- ```
- ## 
- ##     Welch Two Sample t-test
- ## 
- ## data:  october_data$Calories_Used[good_sleep] and october_data$Calories_Used[!good_sleep]
- ## t = -0.4264, df = 16.544, p-value = 0.6753
- ## alternative hypothesis: true difference in means is not equal to 0
- ## 95 percent confidence interval:
- ##  -581.5071  386.3166
- ## sample estimates:
- ## mean of x mean of y 
- ##  2947.500  3045.095
- ```</code></pre>
-</div>
+ans &lt;- t.test(october_data$Calories_Used[good_sleep],october_data$Calories_Used[!good_sleep])
+# Mean Values
+ans$estimate</code></pre>
+<pre><code>## mean of x mean of y 
+##  2947.500  3045.095</code></pre>
+<pre class="r"><code># P-value
+ans$p.value</code></pre>
+<pre><code>## [1] 0.675311</code></pre>
+<p><strong><em>Two-sided test Justification</em></strong>: Daily
+activity can increase or decrease with good sleep as sleeping more could
+mean having a less active day as more time is spent sleeping or having
+enough rest to be more active during the day. <strong><em>Statistical
+interpretation</em></strong>: P-value &gt; 0.05, hence we fail to reject
+the null hypothesis, thus: Getting good sleep has no impact on whether I
+am more or less active during the day.<br />
+<strong>Contextual interpretation</strong>: Despite a difference in the
+calculated mean of calories used on days with good sleep and days
+without good sleep, the t-test analysis indicates that there is no
+significant difference in my daily activity, between days with good
+sleep and days without. This implies that daily activity is not
+associated with sleep.</p></li>
+<li><p><strong>Food intake (Calories Consumed)</strong><br />
+Here I will examine whether I consumed more or less calories on days
+that I had good(enough) sleep, where good sleep is defined by the adult
+standard of 8-hours sleep.<br />
+<strong><em>Null Hypothesis(H₀)</em></strong>: Getting good sleep has no
+impact on the amount of calories consumed during the day.<br />
+<strong><em>Alternative Hypothesis(H1)</em></strong>: Good sleep impacts
+how much food(calories) I consumed during the day.</p>
+<pre class="r"><code>ans &lt;- t.test(october_data$Calories_Consumed[good_sleep],october_data$Calories_Consumed[!good_sleep])
+# Mean Values
+ans$estimate</code></pre>
+<pre><code>## mean of x mean of y 
+##  1714.200  1767.571</code></pre>
+<pre class="r"><code># P-value
+ans$p.value</code></pre>
+<pre><code>## [1] 0.8676897</code></pre>
+<p><strong><em>Two-sided test Justification</em></strong>: Sleeping 8 or
+more hours could affect the calories I consume in both directions. Sleep
+may or may not affect both the amount of food and the type of food I
+consume. <strong><em>Statistical interpretation</em></strong>: P-value
+&gt; 0.05, hence we fail to reject the null hypothesis, thus: Getting
+good sleep has no impact on the amount of calories consumed during the
+day.<br />
+<strong>Contextual interpretation</strong>: Despite a difference in the
+calculated mean of calories consumed on days with good sleep and days
+without good sleep, the t-test analysis indicates that there is no
+significant difference in the mean. We observe that my eating habits are
+independent of whether I had enough sleep or not.</p></li>
+</ol>
 </div>
 </div>
 </div>

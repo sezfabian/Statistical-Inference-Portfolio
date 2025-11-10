@@ -586,7 +586,7 @@ relationship between the days calculated change in body weight and the
 recorded calorie deficit. To test this, I am using liner regression to
 determine if we can predict change in body weight on a daily basis from
 calorie deficit.<br />
-<strong><em>Null Hypothesis(H₀)</em></strong>: There is no a linear
+<strong><em>Null Hypothesis(H₀)</em></strong>: There is no linear
 relationship between caloric deficit in a day and the change in body
 weight over the same period of time (β = 0).<br />
 <strong><em>Alternative Hypothesis(H1)</em></strong>: Body weight
@@ -616,31 +616,26 @@ summary(line_fit)</code></pre>
 <p><strong><em>One-sided test Justification</em></strong>: Based on the
 principles of thermodynamics, we expect a higher change in body weight
 for higher calorie deficit.<br />
-<strong><em>Statistical interpretation</em></strong>: The y-intercept(𝛼)
-estimate is 232.29097, and the slope(𝛽) estimate is -0.26073 hence the
-fitted model is:<br />
-<span class="math inline">\(y_i = 232.29097 - 0.26073x_i +
-\epsilon_i\)</span><br />
-The correlation coefficient R-squared = 0.7441. This is closer to one,
-indicating that the model is a strong fit.<br />
-We observe that two sided P-value &lt; 0.05, our one-sided P-value is
-P-value/2 which is extremely small i.e &lt;&lt;&lt; 0.05, thus the
-fitted model is highly significant. We fail to reject the null
-hypothesis, hence affirm the alternative, that my Body weight decreased
-by approximately 0.26 pounds per day over the month of October.<br />
-<strong>Contextual interpretation</strong>: Maintaining a calorie
-deficit over the month of October resulted in an almost directly related
-decrease in body weight despite variance from that could stem from
-ignored factors like food mass quantity and water consumption.</p></li>
+<strong><em>Statistical interpretation</em></strong>: One-sided P-value
+= 0.98/2 = 0.49 &gt; 0.05, hence we fail to reject the null hypothesis.
+There is no linear relationship between caloric deficit in a day and the
+change in body weight over the same period of time.<br />
+The correlation coefficient R-squared = 3.252e-05. This is very close to
+zero, indicating that the model is not strong fit.<br />
+<strong>Contextual interpretation</strong>: Caloric deficit in a day
+does not directly correspond to body weight change during on a daily
+basis. This means that we cannot infer calorie difference over short
+periods of time from the weight change or the vice versa.</p></li>
 </ul>
 </div>
 </div>
 </div>
 <div id="fishers-exact-test" class="section level1">
 <h1>Fishers exact test</h1>
-<p>To meet meet my weight loss goals i set a daily calorie deficit
-target of 1000. Here will examine if i hit my target more or less
-frequently on days with good sleep(that is, hours &gt;= 8)</p>
+<p>To meet meet my weight loss goals I set a daily calorie deficit
+target of 1000 at the begining of the month of October. Additionally I
+am Here will examine if i hit my target more or less frequently on days
+with good sleep(that is, hours &gt;= 8)</p>
 <div id="null-hypothesis" class="section level2">
 <h2>null hypothesis</h2>
 <p>Getting good sleep has no impact on whether i hit my caloric deficit

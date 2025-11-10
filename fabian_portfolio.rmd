@@ -18,7 +18,7 @@ To track my personal weight loss journey, i collected a dataset using my smart w
 october_data <- read.table("october_data.txt", header=TRUE)
 head(october_data, 5)
 ```
-## Student T-test
+##  Student T-test
 #### a). Weight Change over the month of October (One-sided t-test)
 |        Here I will examine whether my body weight significantly changed between the first half and second half of the month of October.
 
@@ -128,7 +128,7 @@ october_data$Weight_change <- c(NA, diff(october_data$Weight.lbs.))
 plot(Weight_change~Caloric_Difference, data=october_data, col="red" )
 ```
 - From the scatter plot we cannot establish any kind of relationship between the days calculated change in body weight and the recorded calorie deficit. To test this, I am using liner regression to determine if we can predict change in body weight on a daily basis from calorie deficit.  
-___Null Hypothesis(H₀)___: There is no a linear relationship between caloric deficit in a day and the change in body weight over the same period of time (β = 0).    
+___Null Hypothesis(H₀)___: There is no linear relationship between caloric deficit in a day and the change in body weight over the same period of time (β = 0).    
 ___Alternative Hypothesis(H1)___: Body weight changes proportionally to caloric deficit on a daily basis (β > 0)
 
 ```{r indent = "     "}
@@ -138,18 +138,13 @@ line_fit <- lm(Weight_change~Caloric_Difference, data=october_data)
 summary(line_fit)
 ```
 ___One-sided test Justification___: Based on the principles of thermodynamics, we expect a higher change in body weight for higher calorie deficit.   
-___Statistical interpretation___: 
-The y-intercept(𝛼) estimate is 232.29097, and the slope(𝛽) estimate is -0.26073 hence the fitted model is:  
-$y_i = 232.29097 - 0.26073x_i + \epsilon_i$  
-The correlation coefficient R-squared = 0.7441. This is closer to one, indicating that the model is a strong fit.  
-We observe that two sided P-value < 0.05, our one-sided P-value is P-value/2 which is extremely small i.e <<< 0.05, thus the fitted model is highly significant. We fail to reject the null hypothesis, hence affirm the alternative, that my Body weight decreased by approximately 0.26 pounds per day over the month of October.  
-__Contextual interpretation__: Maintaining a calorie deficit over the month of October resulted in an almost directly related decrease in body weight despite variance from that could stem from ignored factors like food mass quantity and water consumption.  
-
-
+___Statistical interpretation___: One-sided P-value = 0.98/2 = 0.49 > 0.05, hence we fail to reject the null hypothesis. There is no linear relationship between caloric deficit in a day and the change in body weight over the same period of time.  
+The correlation coefficient R-squared = 3.252e-05. This is very close to zero, indicating that the model is not strong fit.  
+__Contextual interpretation__: Caloric deficit in a day does not directly correspond to body weight change during on a daily basis. This means that we cannot infer calorie difference over short periods of time from the weight change or the vice versa.
 
 
 # Fishers exact test
-To meet meet my weight loss goals i set a daily calorie deficit target of 1000.
+To meet meet my weight loss goals I set a daily calorie deficit target of 1000 at the begining of the month of October. Additionally I am 
 Here will examine if i hit my target more or less frequently on days with good sleep(that is, hours >= 8)
 
 ## null hypothesis

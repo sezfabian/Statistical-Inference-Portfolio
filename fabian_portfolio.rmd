@@ -27,7 +27,11 @@ ___Alternative Hypothesis(H1)___: My mean body weight is lower in the second hal
 
 ```{r indent = "     "}
 # Student t-test comparing mean of body weight recorded in the second half of the month against the first half of the month.
-second_half <- as.Date(october_data$Date, format = "%d/%m/%Y") >= "2025-10-16"
+# Covert 'Date' from string to Date format 
+october_data$Date <- as.Date(october_data$Date, format = "%d/%m/%Y")
+# Split data between to two halves by date 
+second_half <- october_data$Date >= "2025-10-16"
+# Student t-test
 ans <- t.test(october_data$Weight.lbs.[second_half],october_data$Weight.lbs.[!second_half], alternative = "less")
 # Mean Values
 ans$estimate
@@ -47,7 +51,9 @@ ___Null Hypothesis(H₀)___: Getting good sleep has no impact on whether I am mo
 ___Alternative Hypothesis(H1)___: Good sleep impacts how active I am during the day.
 
 ```{r indent = "     "}
+# Split data into two based on number of hours of sleep
 good_sleep <- october_data$Sleep.Hours >= 8
+# Student t-test
 ans <- t.test(october_data$Calories_Used[good_sleep],october_data$Calories_Used[!good_sleep])
 # Mean Values
 ans$estimate
@@ -64,6 +70,7 @@ ___Null Hypothesis(H₀)___: Getting good sleep has no impact on the amount of c
 ___Alternative Hypothesis(H1)___: Good sleep impacts how much food(calories) I consumed during the day.
 
 ```{r indent = "     "}
+# Student t-test
 ans <- t.test(october_data$Calories_Consumed[good_sleep],october_data$Calories_Consumed[!good_sleep])
 # Mean Values
 ans$estimate
@@ -75,17 +82,71 @@ ___Statistical interpretation___: P-value > 0.05, hence we fail to reject the nu
 __Contextual interpretation__: Despite a difference in the calculated mean of calories consumed on days with good sleep and days without good sleep, the t-test analysis indicates that there is no significant difference in the mean. We observe that my eating habits are independent of whether I had enough sleep or not.
 
 
-# Linear regression
-My dataset includes 4 key independent variables(sleep(hrs), calories_consumed, calories_used, and weight(lbs)).The collected data is noisy as i did not use exact methods for measurement/collection of the data. In this section I will analyze the variables to map relationships and use the modeled relationships to influence my weight loss journey.
-```{r}
-plot(Calories_Used~Sleep.Hours., data=october_data, col="red" )
-points(Calories_Consumed~Sleep.Hours.,  data=october_data, col="blue")
+## Linear regression
+My dataset includes 4 key independent variables (sleep (hrs), calories_consumed, calories_used, and weight(lbs)). The collected data is noisy as I did not use neither exact methods nor perfect equipment for measurement/collection of the data.  
+In this section I will analyze the variables to map relationships and check if I can use the modeled relationships to influence my weight loss journey.
+
+#### a). Weight loss trend analysis.
+- Here I am examining whether my body weight decreases with liner trend through out the month of October
+
+```{r indent = "     "}
+# Scatter plot of weight against date
+plot(Weight.lbs.~Date, data=october_data, col="red" )
 ```
 
-```{r}
-plot(log10(Calories_Used)~Sleep.Hours., data=october_data)
-abline(lm(log10(Calories_Used)~Sleep.Hours., data=october_data))
+- From the plot i can observe that there exists some type of linear relationship between weight and  time in days. I will hence use linear regression to determine if I can define mapping relationship of body weight to time(days) given my activity and eating habits remain consistent with the collected data.  
+___Null Hypothesis(H₀)___: My Body weight does not have a linear trend over time, in the month of October(β = 0).   
+___Alternative Hypothesis(H1)___: My Body weight decreased linearly over time in the month of October, (β > 0)
+
+```{r indent = "     "}
+october_data$Time.days. <- seq(from=1, to=31)
+# Scatter plot of weight against date
+plot(Weight.lbs.~Time.days., data=october_data, col="red" )
+# Liner model fit
+line_fit <- lm(Weight.lbs.~Time.days., data=october_data)
+# Plot linear model
+abline(line_fit)
+# Summary Linear model
+summary(line_fit)
 ```
+___One-sided test Justification___: From the collected data, we have a sustained caloric difference over the month. It is hence expected for weight to decrease over time.  
+___Statistical interpretation___: 
+The y-intercept(𝛼) estimate is 232.29097, and the slope(𝛽) estimate is -0.26073 hence the fitted model is:  
+$y_i = 232.29097 - 0.26073x_i + \epsilon_i$  
+The correlation coefficient R-squared = 0.7441. This is closer to one, indicating that the model is a strong fit.  
+We observe that two sided P-value < 0.05, our one-sided P-value is P-value/2 which is extremely small i.e <<< 0.05, thus the fitted model is highly significant. We fail to reject the null hypothesis, hence affirm the alternative, that my Body weight decreased by approximately 0.26 pounds per day over the month of October.  
+__Contextual interpretation__: Maintaining a calorie deficit over the month of October resulted in an almost directly related decrease in body weight despite variance from that could stem from ignored factors like food mass, waste and water consumption.  
+
+#### b). Caloric deficit against Weight Change.
+- According to the first law of thermodynamics, a difference between calories consumed and calories used should result in a proportional change in body mass. However, the collected data does not account for all variables that impact body mass like water and waste mass.  
+Here, I am examining whether we can predict daily body weight change using the calorie deficit.
+
+```{r indent = "     "}
+# Calculate change in body weight 
+october_data$Weight_change <- c(NA, diff(october_data$Weight.lbs.))
+# Plot change in body against calorie deficit
+plot(Weight_change~Caloric_Difference, data=october_data, col="red" )
+```
+- From the scatter plot we cannot establish any kind of relationship between the days calculated change in body weight and the recorded calorie deficit. To test this, I am using liner regression to determine if we can predict change in body weight on a daily basis from calorie deficit.  
+___Null Hypothesis(H₀)___: There is no a linear relationship between caloric deficit in a day and the change in body weight over the same period of time (β = 0).    
+___Alternative Hypothesis(H1)___: Body weight changes proportionally to caloric deficit on a daily basis (β > 0)
+
+```{r indent = "     "}
+# Linear model fit
+line_fit <- lm(Weight_change~Caloric_Difference, data=october_data)
+# Model summary
+summary(line_fit)
+```
+___One-sided test Justification___: Based on the principles of thermodynamics, we expect a higher change in body weight for higher calorie deficit.   
+___Statistical interpretation___: 
+The y-intercept(𝛼) estimate is 232.29097, and the slope(𝛽) estimate is -0.26073 hence the fitted model is:  
+$y_i = 232.29097 - 0.26073x_i + \epsilon_i$  
+The correlation coefficient R-squared = 0.7441. This is closer to one, indicating that the model is a strong fit.  
+We observe that two sided P-value < 0.05, our one-sided P-value is P-value/2 which is extremely small i.e <<< 0.05, thus the fitted model is highly significant. We fail to reject the null hypothesis, hence affirm the alternative, that my Body weight decreased by approximately 0.26 pounds per day over the month of October.  
+__Contextual interpretation__: Maintaining a calorie deficit over the month of October resulted in an almost directly related decrease in body weight despite variance from that could stem from ignored factors like food mass quantity and water consumption.  
+
+
+
 
 # Fishers exact test
 To meet meet my weight loss goals i set a daily calorie deficit target of 1000.
@@ -99,3 +160,8 @@ good_sleep <- october_data$Sleep.Hours >= 8
 october_data$Sleep.Hours.[good_sleep]
 october_data$Caloric_Difference
 ```
+
+___Null Hypothesis(H₀)___:
+___Alternative Hypothesis(H1)___:
+___Statistical interpretation___:
+__Contextual interpretation__:

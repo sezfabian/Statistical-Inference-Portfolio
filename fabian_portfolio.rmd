@@ -1,6 +1,6 @@
 ---
-title: "fabian_portfolio"
-author: "Fabian Cheruiyot"
+title: "Statistical Inference Portfolio"
+author: "Fabian Cheruiyot 3542490"
 date: "2025-11-05"
 output: html_document
 editor_options: 
@@ -22,7 +22,7 @@ body weight in pounds, with each row representing a day of the month.
 Additionally I recorded the type of day as busy/relaxed based on whether
 I attended any classes during the day.
 
-![My Smartwatch](watch.jpeg){width="100%"}
+![Health data tracking](img.jpg){width="100%"}
 
 ```{r}
 october_data <- read.table("october_data.txt", header=TRUE)
@@ -374,7 +374,7 @@ cat("The credible interval for the mean of Caloric_Difference is:", lower_root$r
 From the statistical analysis of my fitness data over the month of October I was able to learn the following from my data:  
 
 #### a). Scale of time interval matters significantly.
-- Daily measurements of weight showed no correlation between caloric deficit and the change in body weight, however, monthly analysis shows a strong linear trend. To properly track my weight weekly or bi-weekly analysis is necessary to define trends.
+- Daily measurements of weight showed no correlation between caloric deficit and the change in body weight, however, monthly analysis shows a strong linear trend. To properly track my weight large time intervals, i.e. bi-weekly analysis is necessary to define trends.
 
 #### b). My habits are more consistent than I predicted.
 - My sleeping habits and target achievement did not vary based on whether I had busy or relaxed days. Similarly, my calorie intake and activity did not differ by sleep quality, indicating that my habits are generally consistent despite changes in external circumstances.

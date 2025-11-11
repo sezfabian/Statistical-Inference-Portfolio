@@ -1,0 +1,874 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Statistical Inference Portfolio},
+  pdfauthor={Fabian Cheruiyot 3542490},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Statistical Inference Portfolio}
+\author{Fabian Cheruiyot 3542490}
+\date{2025-11-05}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}\label{introduction}
+
+To track my personal weight loss journey, I collected a dataset using my
+smart watch, a kitchen scale, a bathroom scale and the Google fit app
+that contains hours of sleep, calories consumed, calories used, and my
+body weight in pounds, with each row representing a day of the month.
+Additionally I recorded the type of day as busy/relaxed based on whether
+I attended any classes during the day.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{img.png}
+\caption{Health data tracking}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{october\_data }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"october\_data.txt"}\NormalTok{, }\AttributeTok{header=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(october\_data, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Date Sleep.Hours. Calories_Consumed Calories_Used Caloric_Difference Weight.lbs. Type_of_Day
+## 1 1/10/2025         5.33              1120          2635               1515       233.2        Busy
+## 2 2/10/2025         8.33               548          3032               2484       232.8        Busy
+## 3 3/10/2025         8.38              1450          2493               1043       231.8     Relaxed
+## 4 4/10/2025         6.45              1250          2652               1402       231.4     Relaxed
+## 5 5/10/2025         8.23              1040          2471               1431       230.8     Relaxed
+\end{verbatim}
+
+\subsection{1. Student T-test}\label{student-t-test}
+
+\paragraph{a). Weight Change over the month of October (One-sided
+t-test)}\label{a.-weight-change-over-the-month-of-october-one-sided-t-test}
+
+~~~~~~~Here I will examine whether my body weight significantly changed
+between the first half and second half of the month of October.
+
+\begin{itemize}
+\item
+  \textbf{\emph{Null Hypothesis(H₀)}}: There is no difference in my body
+  weight between the first and second half of the month of October.\\
+  \textbf{\emph{Alternative Hypothesis(H\textsubscript{1})}}: My mean
+  body weight is lower in the second half of the month compared to the
+  first half of the month.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Student t{-}test comparing mean of body weight recorded in the second half of the month against the first half of the month.}
+\CommentTok{\# Covert \textquotesingle{}Date\textquotesingle{} from string to Date format }
+\NormalTok{october\_data}\SpecialCharTok{$}\NormalTok{Date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(october\_data}\SpecialCharTok{$}\NormalTok{Date, }\AttributeTok{format =} \StringTok{"\%d/\%m/\%Y"}\NormalTok{)}
+\CommentTok{\# Split data between to two halves by date }
+\NormalTok{second\_half }\OtherTok{\textless{}{-}}\NormalTok{ october\_data}\SpecialCharTok{$}\NormalTok{Date }\SpecialCharTok{\textgreater{}=} \StringTok{"2025{-}10{-}16"}
+\CommentTok{\# Student t{-}test}
+\NormalTok{ans }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(october\_data}\SpecialCharTok{$}\NormalTok{Weight.lbs.[second\_half],october\_data}\SpecialCharTok{$}\NormalTok{Weight.lbs.[}\SpecialCharTok{!}\NormalTok{second\_half], }\AttributeTok{alternative =} \StringTok{"less"}\NormalTok{)}
+\CommentTok{\# Mean Values}
+\NormalTok{ans}\SpecialCharTok{$}\NormalTok{estimate}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## mean of x mean of y 
+##  225.9938  230.3867
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print P{-}value}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"  P{-}value:"}\NormalTok{, ans}\SpecialCharTok{$}\NormalTok{p.value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   P-value: 1.779958e-08
+\end{verbatim}
+\item
+  \textbf{\emph{One-sided test Justification}}: Based on general
+  knowledge and observations I expect my body weight to reduce from
+  maintaining a calorie deficit over a sustained period of time.\\
+\item
+  \textbf{\emph{Statistical interpretation}}: P-value \textless{} 0.05,
+  hence we fail to reject the null hypothesis. This affirms the
+  alternate hypothesis that my body weight decreased.\\
+\item
+  \textbf{Contextual interpretation}: Over the course of the month of
+  October, my body weight shows a statistically significant decrease
+  that aligns with my weight loss goals that can be attributed to having
+  maintained a calorie deficit on most days of the month.
+\end{itemize}
+
+\paragraph{b). Impact of good sleep on daily activity and calories
+consumed (Two-sided t-test
+)}\label{b.-impact-of-good-sleep-on-daily-activity-and-calories-consumed-two-sided-t-test}
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi}.}
+\item
+  \textbf{Daily Activity (Calories Used)}\\
+  Here I will examine whether I was more or less active(used more/less
+  calories) on days that I had good(enough) sleep where good sleep is
+  defined by the adult standard of 8-hours sleep.\\
+  \textbf{\emph{Null Hypothesis(H₀)}}: Getting good sleep has no impact
+  on whether I am more or less active during the day.\\
+  \textbf{\emph{Alternative Hypothesis(H\textsubscript{1})}}: Good sleep
+  impacts how active I am during the day.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Split data into two based on number of hours of sleep}
+\NormalTok{good\_sleep }\OtherTok{\textless{}{-}}\NormalTok{ october\_data}\SpecialCharTok{$}\NormalTok{Sleep.Hours }\SpecialCharTok{\textgreater{}=} \DecValTok{8}
+\CommentTok{\# Student t{-}test}
+\NormalTok{ans }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(october\_data}\SpecialCharTok{$}\NormalTok{Calories\_Used[good\_sleep],october\_data}\SpecialCharTok{$}\NormalTok{Calories\_Used[}\SpecialCharTok{!}\NormalTok{good\_sleep])}
+\CommentTok{\# Mean Values}
+\NormalTok{ans}\SpecialCharTok{$}\NormalTok{estimate}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## mean of x mean of y 
+##  2947.500  3045.095
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print P{-}value}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"  P{-}value:"}\NormalTok{, ans}\SpecialCharTok{$}\NormalTok{p.value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   P-value: 0.675311
+\end{verbatim}
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\emph{Two-sided test Justification}}: Daily activity can
+  increase or decrease with good sleep as sleeping more could mean
+  having a less active day as more time is spent sleeping or having
+  enough rest to be more active during the day.\\
+\item
+  \textbf{\emph{Statistical interpretation}}: P-value \textgreater{}
+  0.05, hence we fail to reject the null hypothesis, thus: Getting good
+  sleep has no impact on whether I am more or less active during the
+  day.\\
+\item
+  \textbf{Contextual interpretation}: Despite a difference in the
+  calculated mean of calories used on days with good sleep and days
+  without good sleep, the t-test analysis indicates that there is no
+  statistically significant difference in my daily activity, between
+  days with good sleep and days without. This implies that daily
+  activity is not associated with sleep or the sample size is not
+  sufficient.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi}.}
+\setcounter{enumi}{1}
+\item
+  \textbf{Food intake (Calories Consumed)}\\
+  Here I will examine whether I consumed more or less calories on days
+  that I had good(enough) sleep, where good sleep is defined by the
+  adult standard of 8-hours sleep.\\
+  \textbf{\emph{Null Hypothesis(H₀)}}: Getting good sleep has no impact
+  on the amount of calories consumed during the day.\\
+  \textbf{\emph{Alternative Hypothesis(H\textsubscript{1})}}: Good sleep
+  impacts how much food(calories) I consumed during the day.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Student t{-}test}
+\NormalTok{ans }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(october\_data}\SpecialCharTok{$}\NormalTok{Calories\_Consumed[good\_sleep],october\_data}\SpecialCharTok{$}\NormalTok{Calories\_Consumed[}\SpecialCharTok{!}\NormalTok{good\_sleep])}
+\CommentTok{\# Mean Values}
+\NormalTok{ans}\SpecialCharTok{$}\NormalTok{estimate}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## mean of x mean of y 
+##  1714.200  1767.571
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print P{-}value}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"  P{-}value:"}\NormalTok{, ans}\SpecialCharTok{$}\NormalTok{p.value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   P-value: 0.8676897
+\end{verbatim}
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\emph{Two-sided test Justification}}: Sleeping 8 or more hours
+  could affect the calories I consume in both directions. Sleep may or
+  may not affect both the amount of food and the type of food I
+  consume.\\
+\item
+  \textbf{\emph{Statistical interpretation}}: P-value \textgreater{}
+  0.05, hence we fail to reject the null hypothesis, thus: Getting good
+  sleep has no impact on the amount of calories consumed during the
+  day.\\
+\item
+  \textbf{Contextual interpretation}: Despite a difference in the
+  calculated mean of calories consumed on days with good sleep and days
+  without good sleep, the t-test analysis indicates that there is no
+  significant difference in the mean. We observe that my eating habits
+  are independent of whether I had enough sleep or not.
+\end{itemize}
+
+\subsection{2. Linear regression}\label{linear-regression}
+
+My dataset includes 4 key independent variables (sleep (hrs),
+calories\_consumed, calories\_used, and weight(lbs)). The collected data
+is noisy as I did not use neither exact methods nor perfect equipment
+for measurement/collection of the data.\\
+In this section I will analyze the variables to map relationships and
+check if I can use the modeled relationships to influence my weight loss
+journey.
+
+\paragraph{a). Weight loss trend
+analysis.}\label{a.-weight-loss-trend-analysis.}
+
+\begin{itemize}
+\item
+  Here I am examining whether my body weight decreases with liner trend
+  through out the month of October
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Scatter plot of weight against date}
+\FunctionTok{plot}\NormalTok{(Weight.lbs.}\SpecialCharTok{\textasciitilde{}}\NormalTok{Date, }\AttributeTok{data=}\NormalTok{october\_data, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+  \pandocbounded{\includegraphics[keepaspectratio]{fabian_portfolio_files/figure-latex/unnamed-chunk-5-1.pdf}}
+\item
+  From the plot I can observe that there exists some type of linear
+  relationship between weight and time in days. I will hence use linear
+  regression to determine if I can define mapping relationship of body
+  weight to time(days) given my activity and eating habits remain
+  consistent with the collected data.\\
+  \textbf{\emph{Null Hypothesis(H₀)}}: My Body weight does not have a
+  linear trend over time, in the month of October(β = 0).\\
+  \textbf{\emph{Alternative Hypothesis(H\textsubscript{1})}}: My Body
+  weight decreased linearly over time in the month of October, (β
+  \textgreater{} 0)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{october\_data}\SpecialCharTok{$}\NormalTok{Time.days. }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\DecValTok{1}\NormalTok{, }\AttributeTok{to=}\DecValTok{31}\NormalTok{)}
+\CommentTok{\# Scatter plot of weight against date}
+\FunctionTok{plot}\NormalTok{(Weight.lbs.}\SpecialCharTok{\textasciitilde{}}\NormalTok{Time.days., }\AttributeTok{data=}\NormalTok{october\_data, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{ )}
+\CommentTok{\# Liner model fit}
+\NormalTok{line\_fit }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Weight.lbs.}\SpecialCharTok{\textasciitilde{}}\NormalTok{Time.days., }\AttributeTok{data=}\NormalTok{october\_data)}
+\CommentTok{\# Plot linear model}
+\FunctionTok{abline}\NormalTok{(line\_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+  \pandocbounded{\includegraphics[keepaspectratio]{fabian_portfolio_files/figure-latex/unnamed-chunk-6-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summary Linear model}
+\FunctionTok{summary}\NormalTok{(line\_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Weight.lbs. ~ Time.days., data = october_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4230 -0.8550 -0.0514  0.4503  5.0701 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 232.29097    0.52047 446.310  < 2e-16 ***
+## Time.days.   -0.26073    0.02839  -9.182 4.41e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.414 on 29 degrees of freedom
+## Multiple R-squared:  0.7441,    Adjusted R-squared:  0.7353 
+## F-statistic: 84.32 on 1 and 29 DF,  p-value: 4.405e-10
+\end{verbatim}
+\item
+  \textbf{\emph{One-sided test Justification}}: From the collected data,
+  we have a sustained caloric difference over the month. It is hence
+  expected for weight to decrease over time.\\
+\item
+  \textbf{\emph{Statistical interpretation}}: The y-intercept(𝛼)
+  estimate is 232.29097, and the slope(𝛽) estimate is -0.26073 hence the
+  fitted model is:\\
+  \(y_i = 232.29097 - 0.26073x_i + \epsilon_i\)\\
+  The correlation coefficient R-squared = 0.7441. This is closer to one,
+  indicating that the model is a strong fit.\\
+  We observe that two sided P-value \textless{} 0.05, our one-sided
+  P-value is P-value/2 which is extremely small i.e
+  \textless\textless\textless{} 0.05, thus the fitted model is highly
+  significant. We fail to reject the null hypothesis, hence affirm the
+  alternative, that my Body weight decreased by approximately 0.26
+  pounds per day over the month of October.\\
+\item
+  \textbf{Contextual interpretation}: Maintaining a calorie deficit over
+  the month of October resulted in an almost directly related decrease
+  in body weight despite variance from that could stem from ignored
+  factors like food mass, waste and water consumption.
+\end{itemize}
+
+\paragraph{b). Caloric deficit against Weight
+Change.}\label{b.-caloric-deficit-against-weight-change.}
+
+\begin{itemize}
+\item
+  According to the first law of thermodynamics, a difference between
+  calories consumed and calories used should result in a proportional
+  change in body mass. However, the collected data does not account for
+  all variables that impact body mass like water and waste mass.\\
+  Here, I am examining whether we can predict daily body weight change
+  using the calorie deficit.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate change in body weight }
+\NormalTok{october\_data}\SpecialCharTok{$}\NormalTok{Weight\_change }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\FunctionTok{diff}\NormalTok{(october\_data}\SpecialCharTok{$}\NormalTok{Weight.lbs.))}
+\CommentTok{\# Plot change in body against calorie deficit}
+\FunctionTok{plot}\NormalTok{(Weight\_change}\SpecialCharTok{\textasciitilde{}}\NormalTok{Caloric\_Difference, }\AttributeTok{data=}\NormalTok{october\_data, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+  \pandocbounded{\includegraphics[keepaspectratio]{fabian_portfolio_files/figure-latex/unnamed-chunk-7-1.pdf}}
+\item
+  From the scatter plot we cannot establish any kind of relationship
+  between the days calculated change in body weight and the recorded
+  calorie deficit. To test this, I am using liner regression to
+  determine if we can predict change in body weight on a daily basis
+  from calorie deficit.\\
+  \textbf{\emph{Null Hypothesis(H₀)}}: There is no linear relationship
+  between caloric deficit in a day and the change in body weight over
+  the same period of time (β = 0).\\
+  \textbf{\emph{Alternative Hypothesis(H\textsubscript{1})}}: Body
+  weight changes proportionally to caloric deficit on a daily basis (β
+  \textgreater{} 0)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Linear model fit}
+\NormalTok{line\_fit }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Weight\_change}\SpecialCharTok{\textasciitilde{}}\NormalTok{Caloric\_Difference, }\AttributeTok{data=}\NormalTok{october\_data)}
+\CommentTok{\# Model summary}
+\FunctionTok{summary}\NormalTok{(line\_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Weight_change ~ Caloric_Difference, data = october_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.7211 -0.5073 -0.0926  0.3709  5.0862 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(>|t|)
+## (Intercept)        -2.865e-01  5.474e-01  -0.523    0.605
+## Caloric_Difference -1.076e-05  3.565e-04  -0.030    0.976
+## 
+## Residual standard error: 1.729 on 28 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  3.252e-05, Adjusted R-squared:  -0.03568 
+## F-statistic: 0.0009106 on 1 and 28 DF,  p-value: 0.9761
+\end{verbatim}
+\item
+  \textbf{\emph{One-sided test Justification}}: Based on the principles
+  of thermodynamics, we expect a higher change in body weight for higher
+  calorie deficit.\\
+\item
+  \textbf{\emph{Statistical interpretation}}: One-sided P-value = 0.98/2
+  = 0.49 \textgreater{} 0.05, hence we fail to reject the null
+  hypothesis. There is no linear relationship between caloric deficit in
+  a day and the change in body weight over the same period of time.\\
+  The correlation coefficient R-squared = 3.252e-05. This is very close
+  to zero, indicating that the model is not strong fit.\\
+\item
+  \textbf{Contextual interpretation}: Caloric deficit in a day does not
+  directly correspond to body weight change during on a daily basis.
+  This means that the data sample size may be insufficient or we cannot
+  infer calorie difference over short time intervals(24hrs) from the
+  weight change or the vice versa .
+\end{itemize}
+
+\subsection{3. Fisher's exact test}\label{fishers-exact-test}
+
+To meet meet my weight loss goals I had set a daily calorie deficit
+target of 1000 cals per day at the beginning of the month of October.
+Additionally I aim to have a consistent sleep schedule of about 8 hours
+of sleep per day.\\
+In this section I will be using Fishers exact test to understand
+relationships between discrete variables; type\_of\_day(busy - day with
+classes, relaxed - no classes), sleep (good\_sleep - more than 8hrs,
+bad\_sleep - less than 8 hours) and, whether I hit my calorie deficit
+target.
+
+\paragraph{a). Sleep vs Type of day}\label{a.-sleep-vs-type-of-day}
+
+\begin{itemize}
+\item
+  Here I will examine whether having a busy or relaxed day determined if
+  I got enough sleep or not.\\
+  \textbf{\emph{Null Hypothesis(H₀)}}: Type of day(busy/relaxed) does
+  not have an impact on whether I get enough sleep or not.\\
+  \textbf{\emph{Alternative Hypothesis(H\textsubscript{1})}}: Type of
+  day(busy/relaxed) determines whether I either get enough sleep or
+  not.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add column Type\_of\_Sleep to the data}
+\NormalTok{october\_data}\SpecialCharTok{$}\NormalTok{Type\_of\_Sleep }\OtherTok{\textless{}{-}}\NormalTok{ october\_data}\SpecialCharTok{$}\NormalTok{Sleep.Hours }\SpecialCharTok{\textgreater{}=} \DecValTok{8}
+\CommentTok{\# Define table consisting of Type\_of\_Day and Type\_of\_Sleep}
+\NormalTok{day\_sleep\_table }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(october\_data}\SpecialCharTok{$}\NormalTok{Type\_of\_Day, october\_data}\SpecialCharTok{$}\NormalTok{Type\_of\_Sleep)}
+\CommentTok{\# Print table}
+\NormalTok{day\_sleep\_table}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          
+##           FALSE TRUE
+##   Busy       11    3
+##   Relaxed    10    7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{()}
+\CommentTok{\# Fisher\textquotesingle{}s exact test}
+\NormalTok{ans }\OtherTok{\textless{}{-}} \FunctionTok{fisher.test}\NormalTok{(day\_sleep\_table, }\AttributeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\CommentTok{\# Print P{-}value}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"  P{-}value:"}\NormalTok{, ans}\SpecialCharTok{$}\NormalTok{p.value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   P-value: 0.280218
+\end{verbatim}
+\item
+  \textbf{\emph{Two-sided test Justification}}: I could have either
+  slept earlier when I knew I had classes during the day and possibly
+  got enough sleep, or had less sleep as I had to wake earlier to attend
+  classes.\\
+\item
+  \textbf{\emph{Statistical interpretation}}: P-value = 0.28
+  \textgreater{} 0.05, hence, we fail to reject the null hypothesis.
+  Therefore, the type of day did not impact whether I got \textgreater=
+  8 hours of sleep.\\
+\item
+  \textbf{Contextual interpretation}: The results shows that from the
+  data, there is no statistically significant evidence that I would get
+  enough sleep during days without classes, compared to day with
+  classes. This implies that my sleeping hours are not affected by
+  whether I have classes to attend or the collected data sample is not
+  sufficient.
+\end{itemize}
+
+\paragraph{b). Sleep vs Target Hit}\label{b.-sleep-vs-target-hit}
+
+\begin{itemize}
+\item
+  Here will examine if I hit my calorie deficit target(1000 cals) more
+  or less frequently on busy days(had classes), compared to relaxed
+  days(no classes).\\
+  \textbf{\emph{Null Hypothesis(H₀)}}: Whether I hit my calorie deficit
+  target or not, has no relationship to whether I had a busy or relaxed
+  day.\\
+  \textbf{\emph{Alternative Hypothesis(H\textsubscript{1})}}: I was more
+  likely to hit or miss my target on busy days.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add column Target\_hit to the data}
+\NormalTok{october\_data}\SpecialCharTok{$}\NormalTok{Target\_hit }\OtherTok{\textless{}{-}}\NormalTok{ october\_data}\SpecialCharTok{$}\NormalTok{Caloric\_Difference }\SpecialCharTok{\textgreater{}=} \DecValTok{1000}
+\CommentTok{\# Define table consisting of Type\_of\_Day and Target\_hit}
+\NormalTok{day\_target\_table }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(october\_data}\SpecialCharTok{$}\NormalTok{Type\_of\_Day, october\_data}\SpecialCharTok{$}\NormalTok{Target\_hit)}
+\CommentTok{\# Print table}
+\NormalTok{day\_target\_table}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          
+##           FALSE TRUE
+##   Busy        4   10
+##   Relaxed     7   10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{()}
+\CommentTok{\# Fisher\textquotesingle{}s exact test}
+\NormalTok{ans }\OtherTok{\textless{}{-}} \FunctionTok{fisher.test}\NormalTok{(day\_target\_table, }\AttributeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\CommentTok{\# Print P{-}value}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"  P{-}value:"}\NormalTok{, ans}\SpecialCharTok{$}\NormalTok{p.value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   P-value: 0.7073807
+\end{verbatim}
+\item
+  \textbf{\emph{Two-sided test Justification}}: Busy days could mean
+  more daily activity as I commute to campus, also it could mean I have
+  less time to exercise/hit the gym. Having a busy day could thus either
+  increase or decrease the likelihood that I hit my daily target.\\
+\item
+  \textbf{\emph{Statistical interpretation}}: P-value = 0.71
+  \textgreater{} 0.05, hence we fail to reject the null Hypothesis.
+  Hence, there is no significant statistical evidence that I was likely
+  to hit or miss my Target on busy days compared to relaxed days.\\
+\item
+  \textbf{Contextual interpretation}: From the recorded data, we cannot
+  define a relation between having a busy day and whether I hit my
+  target. Despite my expectation that there should be a relation between
+  type of day and whether I hit my target, the statistical analysis
+  indicates that either the data sample size is insufficient to
+  determine a relationship or there exists no such relationship.
+\end{itemize}
+
+\subsection{4. Likelyhood}\label{likelyhood}
+
+Using the collected data over the month of October, I am able to
+determine mean of the amount of Sleep in hours and the mean of Calorie
+difference on the first month of my weight loss journey.
+
+\begin{itemize}
+\tightlist
+\item
+  Given that I maintain the same routine I can use the Likelihood to
+  evaluate estimates of the mean hours of sleep and mean calorie deficit
+  I can achieve over the rest of the months on my weight loss journey.\\
+  In this section, I will plot the Likelihood functions, Support
+  functions and define Credible intervals for the mean estimates.
+\end{itemize}
+
+\paragraph{a). Likelihood functions}\label{a.-likelihood-functions}
+
+\begin{itemize}
+\item
+  The collected data contains 31 rows, which is greater than 30 hence I
+  have confidence that the calculated mean is close to the true mean.\\
+  Using the mean and standard deviation, I am able to plot the
+  likelihood functions:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate mean and sd of Sleep(Hours)}
+\NormalTok{sleep\_data }\OtherTok{\textless{}{-}}\NormalTok{ october\_data}\SpecialCharTok{$}\NormalTok{Sleep.Hours.}
+\NormalTok{sleep\_mean }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(sleep\_data)}
+\NormalTok{sleep\_sd }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(sleep\_data)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Hours of sleep; mean:"}\NormalTok{, sleep\_mean, }\StringTok{"  sd:"}\NormalTok{, sleep\_sd)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Hours of sleep; mean: 7.273871   sd: 1.439314
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate mean and sd of Caloric\_Difference}
+\NormalTok{calorie\_deficit\_data }\OtherTok{\textless{}{-}}\NormalTok{ october\_data}\SpecialCharTok{$}\NormalTok{Caloric\_Difference}
+\NormalTok{calorie\_deficit\_mean }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(calorie\_deficit\_data)}
+\NormalTok{calorie\_deficit\_sd }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(calorie\_deficit\_data)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Caloric\_Difference mean:"}\NormalTok{, calorie\_deficit\_mean, }\StringTok{"  sd:"}\NormalTok{, calorie\_deficit\_sd)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Caloric_Difference mean: 1263.258   sd: 886.6851
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot Likelihood function for the mean of Sleep(Hours)}
+\NormalTok{like }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(sleep\_mean)\{}\FunctionTok{prod}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(sleep\_data,}\AttributeTok{mean=}\NormalTok{sleep\_mean, }\AttributeTok{sd=}\NormalTok{sleep\_sd))\}}
+\NormalTok{mean\_sleep\_hours }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\FloatTok{6.5}\NormalTok{,}\AttributeTok{to=}\FloatTok{8.3}\NormalTok{,}\AttributeTok{len=}\DecValTok{100}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(mean\_sleep\_hours,}\FunctionTok{sapply}\NormalTok{(mean\_sleep\_hours,like))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\FunctionTok{mean}\NormalTok{(sleep\_data)) }
+
+\CommentTok{\# Plot Likelihood function for the mean of Caloric\_Difference}
+\NormalTok{like }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(calorie\_deficit\_mean)\{}\FunctionTok{prod}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(calorie\_deficit\_data,}\AttributeTok{mean=}\NormalTok{calorie\_deficit\_mean, }\AttributeTok{sd=}\NormalTok{calorie\_deficit\_sd))\}}
+\NormalTok{mean\_calorie\_deficit }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\DecValTok{500}\NormalTok{,}\AttributeTok{to=}\DecValTok{2000}\NormalTok{,}\AttributeTok{len=}\DecValTok{100}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(mean\_calorie\_deficit,}\FunctionTok{sapply}\NormalTok{(mean\_calorie\_deficit,like))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\NormalTok{calorie\_deficit\_mean) }
+\end{Highlighting}
+\end{Shaded}
+
+  \includegraphics[width=0.5\linewidth]{fabian_portfolio_files/figure-latex/unnamed-chunk-11-1}
+  \includegraphics[width=0.5\linewidth]{fabian_portfolio_files/figure-latex/unnamed-chunk-11-2}
+\end{itemize}
+
+\paragraph{b). Support functions}\label{b.-support-functions}
+
+\begin{itemize}
+\item
+  I can observe that the likelihood functions are maximized at the
+  calculated means. I can thus plot support functions offset by the
+  maximum values such that support=0 at max:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot Support function for mean of Sleep(hours)}
+\NormalTok{support\_sleep }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(sleep\_mean)\{}\FunctionTok{sum}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(sleep\_data,}\AttributeTok{mean=}\NormalTok{sleep\_mean, }\AttributeTok{sd=}\NormalTok{sleep\_sd, }\AttributeTok{log=}\ConstantTok{TRUE}\NormalTok{))\}}
+\NormalTok{mean\_sleep\_hours }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\FloatTok{6.5}\NormalTok{,}\AttributeTok{to=}\FloatTok{7.9}\NormalTok{,}\AttributeTok{len=}\DecValTok{100}\NormalTok{)}
+\NormalTok{s }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(mean\_sleep\_hours, support\_sleep)}
+\FunctionTok{plot}\NormalTok{(mean\_sleep\_hours,s}\SpecialCharTok{{-}}\FunctionTok{max}\NormalTok{(s))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\FunctionTok{mean}\NormalTok{(sleep\_data))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }
+
+\CommentTok{\# Plot Support function for mean of Calorie deficit}
+\NormalTok{support\_calorie\_diff }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(calorie\_deficit\_mean)\{}\FunctionTok{sum}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(calorie\_deficit\_data,}\AttributeTok{mean=}\NormalTok{calorie\_deficit\_mean, }\AttributeTok{sd=}\NormalTok{calorie\_deficit\_sd, }\AttributeTok{log=}\ConstantTok{TRUE}\NormalTok{))\}}
+\NormalTok{mean\_calorie\_deficit }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\DecValTok{800}\NormalTok{,}\AttributeTok{to=}\DecValTok{1700}\NormalTok{,}\AttributeTok{len=}\DecValTok{100}\NormalTok{)}
+\NormalTok{s }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(mean\_calorie\_deficit,support\_calorie\_diff)}
+\FunctionTok{plot}\NormalTok{(mean\_calorie\_deficit,s}\SpecialCharTok{{-}}\FunctionTok{max}\NormalTok{(s))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\NormalTok{calorie\_deficit\_mean)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+  \includegraphics[width=0.5\linewidth]{fabian_portfolio_files/figure-latex/unnamed-chunk-12-1}
+  \includegraphics[width=0.5\linewidth]{fabian_portfolio_files/figure-latex/unnamed-chunk-12-2}
+\end{itemize}
+
+\paragraph{c). Credible Intervals}\label{c.-credible-intervals}
+
+\begin{itemize}
+\item
+  In the above plots, I have added two horizontal lines at h = 0 and h =
+  -2 that correspond to the max likelihood estimates for the means and
+  two units of support for the mean values giving me their credible
+  intervals.\\
+  I can thus define the credible interval(95\% likelihood interval) for
+  the estimate of the mean of Sleep(hours) by off-setting the support
+  graph by +2 such that the support line 𝒮 = −2 is now 𝒮 = 0 and
+  resolving the roots as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Offset support function by +2}
+\NormalTok{s }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(mean\_sleep\_hours, support\_sleep)}
+\NormalTok{root\_function }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{support\_sleep}\NormalTok{(x) }\SpecialCharTok{{-}} \FunctionTok{max}\NormalTok{(s) }\SpecialCharTok{+} \DecValTok{2}\NormalTok{\}}
+\CommentTok{\# Calculate roots}
+\NormalTok{lower\_root }\OtherTok{\textless{}{-}} \FunctionTok{uniroot}\NormalTok{( }\AttributeTok{f =}\NormalTok{ root\_function, }\AttributeTok{interval =} \FunctionTok{c}\NormalTok{(}\FloatTok{6.6}\NormalTok{, }\DecValTok{7}\NormalTok{))}
+\NormalTok{upper\_root }\OtherTok{\textless{}{-}} \FunctionTok{uniroot}\NormalTok{( }\AttributeTok{f =}\NormalTok{ root\_function, }\AttributeTok{interval =} \FunctionTok{c}\NormalTok{(}\FloatTok{7.6}\NormalTok{, }\FloatTok{7.9}\NormalTok{))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The credible interval for the mean of Sleep(hours) is:"}\NormalTok{, lower\_root}\SpecialCharTok{$}\NormalTok{root, }\StringTok{" to"}\NormalTok{, upper\_root}\SpecialCharTok{$}\NormalTok{root)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The credible interval for the mean of Sleep(hours) is: 6.756844  to 7.790911
+\end{verbatim}
+\item
+  Similarly the credible interval for the mean of the Calorie Difference
+  can be calculated as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Offset support function by +2}
+\NormalTok{s }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(mean\_calorie\_deficit,support\_calorie\_diff)}
+\NormalTok{root\_function }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{support\_calorie\_diff}\NormalTok{(x) }\SpecialCharTok{{-}} \FunctionTok{max}\NormalTok{(s) }\SpecialCharTok{+} \DecValTok{2}\NormalTok{\}}
+\CommentTok{\# Calculate roots}
+\NormalTok{lower\_root }\OtherTok{\textless{}{-}} \FunctionTok{uniroot}\NormalTok{( }\AttributeTok{f =}\NormalTok{ root\_function, }\AttributeTok{interval =} \FunctionTok{c}\NormalTok{(}\DecValTok{800}\NormalTok{, }\DecValTok{1000}\NormalTok{))}
+\NormalTok{upper\_root }\OtherTok{\textless{}{-}} \FunctionTok{uniroot}\NormalTok{( }\AttributeTok{f =}\NormalTok{ root\_function, }\AttributeTok{interval =} \FunctionTok{c}\NormalTok{(}\DecValTok{1500}\NormalTok{, }\DecValTok{1700}\NormalTok{))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The credible interval for the mean of Caloric\_Difference is:"}\NormalTok{, lower\_root}\SpecialCharTok{$}\NormalTok{root, }\StringTok{" to"}\NormalTok{, upper\_root}\SpecialCharTok{$}\NormalTok{root)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The credible interval for the mean of Caloric_Difference is: 944.7512  to 1581.765
+\end{verbatim}
+\end{itemize}
+
+\subsection{Conclusion}\label{conclusion}
+
+From the statistical analysis of my fitness data over the month of
+October I was able to learn the following from my data:
+
+\paragraph{a). Scale of time interval matters
+significantly.}\label{a.-scale-of-time-interval-matters-significantly.}
+
+\begin{itemize}
+\tightlist
+\item
+  Daily measurements of weight showed no correlation between caloric
+  deficit and the change in body weight, however, monthly analysis shows
+  a strong linear trend. To properly track my weight large time
+  intervals, i.e.~bi-weekly analysis is necessary to define trends.
+\end{itemize}
+
+\paragraph{b). My habits are more consistent than I
+predicted.}\label{b.-my-habits-are-more-consistent-than-i-predicted.}
+
+\begin{itemize}
+\tightlist
+\item
+  My sleeping habits and target achievement did not vary based on
+  whether I had busy or relaxed days. Similarly, my calorie intake and
+  activity did not differ by sleep quality, indicating that my habits
+  are generally consistent despite changes in external circumstances.
+\end{itemize}
+
+\paragraph{c). Using Calorie Defficit tracking is an effective approach
+to Weight Loss management despite
+overestimation.}\label{c.-using-calorie-defficit-tracking-is-an-effective-approach-to-weight-loss-management-despite-overestimation.}
+
+\begin{itemize}
+\tightlist
+\item
+  Daily measurement of weight change revealed high variance which cannot
+  be used to atomically define weight loss over short time interval.
+  However, the fitted linear model predicts a change of -0.26lbs per
+  day, which evaluates to 8.06lbs in 31 days. Actual loss was 9lbs -The
+  general rule is 1lb = 3500cal thus from this rule we can calculate
+  mean calorie deficit as (9 * 3500)/31 = 1016.13 cals.\\
+  -The mean calorie difference from my recorded data is 1263.2 revealing
+  that there is an overestimation of approximately 24.31\%. This shows
+  that the tracking methods were not perfect but the the fundamental
+  strategy is validated.
+\end{itemize}
+
+\paragraph{d). Non-Significant results(P-value \textgreater{} 0.05) are
+still
+Informative}\label{d.-non-significant-resultsp-value-0.05-are-still-informative}
+
+\begin{itemize}
+\tightlist
+\item
+  Despite my initial concern that most of the statistical analysis
+  reveal non-significant results, there are important inferences from
+  this results that provide deeper understanding/lessons from the data.
+\end{itemize}
+
+The statistical analysis of my fitness data revealed a number of
+surprising patterns. More,importantly I was able to learn and use
+different methods in statistical analysis with Hypothesis testing at the
+core. Additionally, I was able to grasp the concept of one-sided vs
+two-side testing, and its significance in statistical analysis.
+
+\end{document}

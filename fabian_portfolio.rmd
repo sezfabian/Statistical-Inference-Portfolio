@@ -15,12 +15,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-To track my personal weight loss journey, I collected a dataset using my
-smart watch, a kitchen scale, a bathroom scale and the Google fit app
-that contains hours of sleep, calories consumed, calories used, and my
-body weight in pounds, with each row representing a day of the month.
-Additionally I recorded the type of day as busy/relaxed based on whether
-I attended any classes during the day.
+To track my personal weight loss journey, I collected a dataset using my smart watch, a
+kitchen scale, a bathroom scale and the Google fit app that contains hours of sleep,
+calories consumed, calories used, and my body weight in pounds, with each row
+representing a day of the month. Additionally, I recorded the type of day as busy/relaxed
+based on whether I attended any classes during the day. I this portfolio I applied the
+statistical methods; t-test, Linear regression, Fisher's exact test and the A log-
+likelihood/support function to analyze and draw supported conclusions from my data.
 
 ![Health data tracking](img.jpg){width="100%"}
 
@@ -57,7 +58,7 @@ cat("  P-value:", ans$p.value)
 - ***One-sided test Justification***: Based on general knowledge and
 observations I expect my body weight to reduce from maintaining a
 calorie deficit over a sustained period of time.\
-- ***Statistical interpretation***: P-value \< 0.05, hence we fail to
+- ***Statistical interpretation***: P-value \< 0.05, hence we
 reject the null hypothesis. This affirms the alternate hypothesis that my body weight decreased.  
 - **Contextual interpretation**: Over the
 course of the month of October, my body weight shows a statistically
